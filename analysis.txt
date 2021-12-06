@@ -1,0 +1,23 @@
+1. Main Function Analysis
+In the main program, I read the input strings by each character using the get function.
+The program reads in the characters in groups of size k. Then a geneseq object is created with 
+that subsequence of size k and push it into the vector of geneseq objects.
+
+2. Analysis on Geneseq class
+The first thing I did was design a class object for the Gene sequence.
+Each class object contains each sub gene of the input DNA strand. We can 
+easily do comparisons on sequences in this class using the overloaded == operator.
+The equality operator allows me to easily compare and output subsequences of the overall
+gene.
+
+3. LCS Solution -dynamic algo
+The solution for finding the LCS was dynamic. The chosen solution was based off the 
+LCS solution we went over in class which had a time complexity of O(n*m). First, a matrix was created 
+and the two Gene sequences (stored in vectors), and every time I found a match the number of occurrences 
+would increase by 1. When no matching sequence is found the program takes the max of the top and left-side array indexs'.
+The geneseq class serves the algorithm since the comparisonn operator used == can be done in constant time.
+The nested for loops and matrix contains the values of the number of occurrences for each gene in the solution.
+
+4. Output
+I printed the vector of gene sequences. Since we must touch each element in the 
+vector to print the element this was done in linear time O(n).
