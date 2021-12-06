@@ -15,10 +15,9 @@
 #include <iomanip>
 #include <fstream>
 
-using namespace std;
 
 // Prototypes
-vector<Geneseq> make_gnome(ifstream &inStream, int k);
+std::vector<Geneseq> make_gnome(std::ifstream &inStream, int k);
 /* 
  * Function: make_gnome
  * Purpose: The above function returns a collection of gene sequence objects.
@@ -49,7 +48,7 @@ int max_num(int n0, int n1);
  * @return a- the bigger integer
 */
 
-void dyn_algo(vector<Geneseq> gene_seq1, vector<Geneseq> gene_seq2, int length_one, int length_two);
+void dyn_algo(std::vector<Geneseq> gene_seq1, std::vector<Geneseq> gene_seq2, int length_one, int length_two);
 /*
  * Dynamic programming solution to find the largest common subsequence of the DNA strands
  * Space complexity: O(m*n) space for matrix allocation
@@ -67,21 +66,21 @@ void dyn_algo(vector<Geneseq> gene_seq1, vector<Geneseq> gene_seq2, int length_o
 
 // Main function that takes command-line arguments 
 int main(int argc, char **argv) {
-    ifstream inputf;
+    std::ifstream inputf;
     int seq_size;                  
 
   ///< file error check 
   inputf.open(argv[1]);
   if(!inputf) {
-    cout << "error opening file" << endl;
+    std::cout << "error opening file" << std::endl;
     exit(1);
   }
 
   inputf >> seq_size; 
   inputf.ignore();   
 
-  vector<Geneseq> gene_seq1 = make_gnome(inputf, seq_size);  
-  vector<Geneseq> gene_seq2 = make_gnome(inputf, seq_size);  
+  std::vector<Geneseq> gene_seq1 = make_gnome(inputf, seq_size);  
+  std::vector<Geneseq> gene_seq2 = make_gnome(inputf, seq_size);  
   
   inputf.close();  
 
@@ -90,10 +89,10 @@ int main(int argc, char **argv) {
   return 0;
 }
 
-vector<Geneseq> make_gnome(ifstream &inStream, int k){
+std::vector<Geneseq> make_gnome(std::ifstream &inStream, int k){
     char character;
-    vector<Geneseq> cons; 
-    string fullseq = ""; 
+    std::vector<Geneseq> cons; 
+    std::string fullseq = ""; 
     int occ = 0; 
     while(!inStream.eof()){
         inStream.get(character);
@@ -101,18 +100,20 @@ vector<Geneseq> make_gnome(ifstream &inStream, int k){
             return cons;
         }
 
-        fullseq += character; occ++;
+        fullseq += character; 
+        occ++;
 
         if(occ == k){
             cons.push_back(fullseq);
-            fullseq = ""; occ = 0;
+            fullseq = ""; 
+            occ = 0;
         }
 
     }
     return cons;
 }
 
-void dyn_algo(vector<Geneseq> gene_seq1, vector<Geneseq> gene_seq2, int length_one, int length_two){
+void dyn_algo(std::vector<Geneseq> gene_seq1, std::vector<Geneseq> gene_seq2, int length_one, int length_two){
     int solutionT[length_one+1][length_two+1];
     for(int i = 0; i <= length_one; i++){
         for(int j = 0; j <= length_two; j++){
@@ -127,13 +128,13 @@ void dyn_algo(vector<Geneseq> gene_seq1, vector<Geneseq> gene_seq2, int length_o
         }
     }
 
-    vector<string> oput;
+    std::vector<std::string> oput;
     int i = length_one; 
     int j = length_two; 
 
-    while ((i > 0) && (j > 0)) { 
+    while (i > 0 && j > 0) { 
         if (gene_seq1[i-1] == gene_seq2[j-1]) {     
-            oput.push_back(gene_seq1[i-1].seq_getter());
+            oput.push_back(gene_seq1[i-1].full_seq);
             i--; j--;
         } 
         else if(solutionT[i-1][j] > solutionT[i][j-1]){
@@ -143,16 +144,16 @@ void dyn_algo(vector<Geneseq> gene_seq1, vector<Geneseq> gene_seq2, int length_o
         }
     } 
 
-    cout << solutionT[length_one][length_two] << endl;
+    std::cout << solutionT[length_one][length_two] << std::endl;
     if(!oput.empty()){
         for(int i = oput.size(); i >= 0; i--){
-            cout << oput[i];
+            std::cout << oput[i];
         }
-        cout << endl;
+        std::cout << std::endl;
     }
 }
 
 
-int max_num(int n0, int n1){
+int max_num(const int n0,const int n1){
     return (n0 > n1)? n0:n1;
 }

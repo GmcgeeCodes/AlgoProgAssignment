@@ -41,9 +41,7 @@ class Geneseq{
     public:
         bool operator==(const Geneseq& passedgene)const;
         Geneseq(const std::string sub_seq);
-         int freq[ASCII_R] = {0 }; // Table of frequencies
-        std::string seq_getter(){return full_seq;};
-    private:
-        // private variables for the class
-        std::string full_seq; 
+        int freq[ASCII_R] = {0 }; // Table of frequencies
+        std::string full_seq;
+    
 };
