@@ -115,6 +115,7 @@ std::vector<Geneseq> make_gnome(std::ifstream &inStream, int k){
 
 void dyn_algo(std::vector<Geneseq> gene_seq1, std::vector<Geneseq> gene_seq2, int length_one, int length_two){
     int solutionT[length_one+1][length_two+1];
+    memset( solutionT, 0, length_one*length_two*sizeof(int));
     for(int i = 0; i <= length_one; i++){
         for(int j = 0; j <= length_two; j++){
             if(i == 0 || j == 0){
